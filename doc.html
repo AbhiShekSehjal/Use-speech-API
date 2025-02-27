@@ -5,61 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speech Recognition App</title>
-    <style>
-        body {
-            background-color: bisque;
-        }
-
-        .container {
-            border: 3px solid;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: auto;
-            width: 600px;
-            padding: 50px;
-            background-color: aqua;
-            border-radius: 50px;
-            margin: 100px auto;
-            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        h2 {
-            font-size: 40px;
-            font-weight: bolder;
-            text-transform: capitalize;
-        }
-
-        #textarea {
-            height: 150px;
-            width: 100%;
-            margin-bottom: 50px;
-            border-radius: 30px;
-            padding: 30px;
-            font-size: 18px;
-            resize: none;
-            border: none;
-        }
-
-        button {
-            width: 200px;
-            height: 50px;
-            background-color: rgb(8, 60, 47);
-            border-radius: 25px;
-            border: none;
-            color: white;
-            font-weight: bolder;
-            text-transform: uppercase;
-            font-size: 15px;
-            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: rgb(0, 100, 80);
-        }
-    </style>
 </head>
 
 <body>
@@ -68,48 +13,6 @@
         <textarea id="textarea" placeholder="Your Voice Message is here..." readonly></textarea>
         <button onclick="startSpeechRecognition()">Click to Speak</button>
     </div>
-
-    <script>
-        function startSpeechRecognition() {
-            if (!('webkitSpeechRecognition' in window)) {
-                alert("Your browser does not support Speech Recognition. Please try a modern browser like Chrome.");
-                return;
-            }
-
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            const textarea = document.getElementById('textarea');
-            const button = document.querySelector('button');
-
-            // Disable button during recognition
-            button.disabled = true;
-            button.textContent = "Listening...";
-
-            recognition.start();
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                textarea.value = transcript;
-            };
-
-            recognition.onerror = (event) => {
-                console.error(`Error occurred: ${event.error}`);
-                if (event.error === 'aborted') {
-                    alert("Speech recognition was interrupted. Please try again.");
-                }
-            };
-
-            recognition.onend = () => {
-                // Re-enable the button when recognition ends
-                button.disabled = false;
-                button.textContent = "Click to Speak";
-            };
-        }
-
-    </script>
 </body>
 
 </html>
